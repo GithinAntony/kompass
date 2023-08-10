@@ -1,0 +1,82 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+<style>
+	table th{color:#1D1D1D}
+	table td{color:#3E3E3E}
+
+</style>
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li>Locality</li>
+        </div>
+    </div>
+</div>
+<div class="aboutus">
+    <div class="container-fluid">
+        <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                        {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="col-sm-8" style="max-height:500px; overflow-y:scroll;">
+            <h3>All Localities</h3>
+            <hr>
+            <div class="col-sm-12">
+                <table class="table table-hover table-datatable">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in locality %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.name }}</td>
+                        <td>
+                            <a href="admin-locality/delete/{{ i.id }}"
+                               class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h3>Add New Locality</h3>
+            <hr>
+            <form class="form-horizontal well" method="post" novalidate >
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-4 control-label text-success">Locality
+                        Name</label>
+                    <div class="col-sm-8">
+                        {{ form.name }}
+                        {{ form.name.errors }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12" align="center">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% include "includes/footer.html" %}

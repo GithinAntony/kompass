@@ -1,0 +1,41 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<div id="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb">
+        <li><a href="index.php">Home</a></li>
+        <li>ABOUT</li>
+      </div>
+    </div>
+  </div>
+
+            <div class="about">
+    <div class="container">
+      <div class="col-md-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+        <h2>About Kompass</h2>
+        <img src="{% static 'images/6.jpg' %}" class="img-responsive" />
+      </div>
+
+      <div class="col-md-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+        <h2>&nbsp;</h2>
+        <p style="font-size:15px">If we get to a new tourist place, the google map may be used to get the
+information about it. But some of it is hard to understand and some have less
+information. So we are introducing a new generation application named
+‘Kompass’. Kompass makes exploring the world easier by organizing the
+essential information about a tourist spot in one place.
+
+          <p style="font-size:15px">The existing System will not provide each and every minute details about a
+single place.
+’Kompass’ will provide photos, details, facilities, fee structure, ratings,
+reviews about a place and also will get suggestions based on what’s nearby.
+          </p>
+      </div>
+    </div>
+  </div>
+  <!--/#contact-page-->
+
+{% include "includes/footer.html" %}

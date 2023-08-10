@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kompass</title>
+
+  <!-- Bootstrap -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+  <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <!-- =======================================================
+    Theme Name: Company
+    Theme URL: https://bootstrapmade.com/company-free-html-bootstrap-template/
+    Author: BootstrapMade
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse.collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+            <div class="navbar-brand">
+              <a href="index.html"><h1><img src="{% static 'images/kompass.png' %}" width="35"><span> Kompass</span></h1></a>
+            </div>
+          </div>
+
+          <div class="navbar-collapse collapse">
+            <div class="menu">
+              <ul class="nav nav-tabs" role="tablist">
+                <!--<li role="presentation"><a href="about.php">About Us</a></li>-->
+                  {% if 'is_logged_in' not in request.session %}
+                  {% url 'home' as home_url %}
+                <li role="presentation"><a href="/home"  {% if request.get_full_path == home_url %} class="active" {% endif %} >Home</a></li>
+                  {% url 'login' as home_url %}
+                  <li role="presentation"><a href="/login" {% if request.get_full_path == home_url %} class="active" {% endif %} >User Login</a></li>
+                   {% url 'register' as home_url %}
+                  <li role="presentation"><a href="/register" {% if request.get_full_path == home_url %} class="active" {% endif %} >User Register</a></li>
+
+                  {% url 'owner-login' as home_url %}
+                  <li role="presentation"><a href="/owner-login" {% if request.get_full_path == home_url %} class="active" {% endif %} >Owner Login</a></li>
+                   {% url 'owner-register' as home_url %}
+                  <li role="presentation"><a href="/owner-register" {% if request.get_full_path == home_url %} class="active" {% endif %} >Owner Register</a></li>
+                  {% endif %}
+
+                 {% if 'is_logged_in' in request.session and request.session.usertype == 'user' %}
+                {% url 'user-dashboard' as home_url %}
+                  <li role="presentation"><a href="/user-dashboard" {% if request.get_full_path == home_url %} class="active" {% endif %} >Dashboard</a></li>
+                {% url 'home' as home_url %}
+                  <li role="presentation"  > <a href="/home"  {% if request.get_full_path == home_url %} class="active" {% endif %} >Search</a></li>
+                {% url 'user-booking-orders' as home_url %}
+                  <li role="presentation"  > <a href="/user-booking-orders"  {% if request.get_full_path == home_url %} class="active" {% endif %} >My Bookings</a></li>
+                 {% url 'user-edit-profile' as home_url %}
+                  <li role="presentation"  > <a href="/user-edit-profile"  {% if request.get_full_path == home_url %} class="active" {% endif %} >Edit Profile</a></li>
+                  {% url 'user-change-password' as home_url %}
+                  <li role="presentation"  > <a href="/user-change-password"  {% if request.get_full_path == home_url %} class="active" {% endif %} >Change Password</a></li>
+                {% endif %}
+
+                 {% if 'is_logged_in' in request.session and request.session.usertype == 'owner' %}
+                {% url 'user-dashboard' as home_url %}
+                  <li role="presentation"><a href="/user-dashboard" {% if request.get_full_path == home_url %} class="active" {% endif %} >Dashboard</a></li>
+                {% url 'addnewplace' as home_url %}
+                <li role="presentation"><a href="/addnewplace" {% if request.get_full_path == home_url %} class="active" {% endif %} >Add New Establishment</a></li>
+                 {% url 'myplaces' as home_url %}
+                <li role="presentation"><a href="/myplaces" {% if request.get_full_path == home_url %} class="active" {% endif %} >My Establishments</a></li>
+                 {% url 'pendingplaces' as home_url %}
+                <li role="presentation"><a href="/pendingplaces" {% if request.get_full_path == home_url %} class="active" {% endif %} >Pending Approvals</a></li>
+                {% url 'owner-edit-profile' as home_url %}
+                  <li role="presentation"  > <a href="/owner-edit-profile"  {% if request.get_full_path == home_url %} class="active" {% endif %} >Edit Profile</a></li>
+                {% url 'owner-change-password' as home_url %}
+                  <li role="presentation"  > <a href="/owner-change-password"  {% if request.get_full_path == home_url %} class="active" {% endif %} >Change Password</a></li>
+                {% endif %}
+
+
+                {% if 'is_logged_in' in request.session and request.session.usertype == 'admin' %}
+                {% url 'admin-dashboard' as home_url %}
+                  <li role="presentation"><a href="/admin-dashboard" {% if request.get_full_path == home_url %} class="active" {% endif %} >Dashboard</a></li>
+                {% url 'pendingplaces' as home_url %}
+                  <li role="admin-users" ><a href="/admin-users" {% if request.get_full_path == home_url %} class="active" {% endif %} >Users</a></li>
+                {% url 'admin-places' as home_url %}
+                  <li role="presentation" ><a href="/admin-places" {% if request.get_full_path == home_url %} class="active" {% endif %} >Places</a></li>
+                {% url 'admin-locality' as home_url %}
+                  <li role="presentation" ><a href="/admin-locality" {% if request.get_full_path == home_url %} class="active" {% endif %} >Localities</a></li>
+                {% url 'admin-amenity' as home_url %}
+                  <li role="presentation" ><a href="/admin-amenity" {% if request.get_full_path == home_url %} class="active" {% endif %} >Amenities</a></li>
+                {% url 'admin-contact-us' as home_url %}
+                <li role="presentation" ><a href="/admin-contact-us" {% if request.get_full_path == home_url %} class="active" {% endif %} >Messages</a></li>
+                {% endif %}
+                {% if 'is_logged_in' in request.session %}
+                 <li role="presentation"><a href="/logout">Logout</a></li>
+                {% endif %}
+                {% if 'is_logged_in' not in request.session %}
+                <li role="presentation"><a href="/about">About</a></li>
+                <li role="presentation"><a href="/contact">Contact</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  

@@ -1,0 +1,127 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<style>
+.daterangepicker { color:#000 !important; }
+.daterangepicker .drp-buttons .applyBtn { margin-top: 0px !important; }
+</style>
+
+  <div id="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb">
+        <li><a href="index.php">Home</a></li>
+        <li>Check In Details</li>
+      </div>
+    </div>
+  </div>
+
+<div class="aboutus">
+    <div class="container">
+        <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <!-- REPEAT RESULT -->
+        <div class="col-sm-8 col-sm-offset-2 well input-form">
+            <h3>Check In Details</h3>
+            <form action="" class="form-horizontal" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-sm-12 align-center" style="color:red">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+                                <div class="form-group">
+                    <label class="col-sm-4 control-label text-success">Booking Item</label>
+                    <div class="col-sm-8" style="color: #1D1D1D; font-weight: bold; padding-top: 7px">
+                        {{ place.name }}
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-4 control-label text-success">Booking Price per item</label>
+                    <div class="col-sm-8" style="color: #1D1D1D; font-weight: bold; padding-top: 7px">
+                        Rs. {{ place.booking_price }}
+                    </div>
+                </div>
+                <div class="form-group">
+                     <label for="{{ form.date.id_for_label }}" class="col-sm-4 control-label text-success">Date</label>
+                    <div class="col-sm-8">
+                        {{ form.date }}
+                        {{ form.date.errors }}
+                    </div>
+                </div>
+               <div class="form-group">
+                     <label for="{{ form.no_of_rooms.id_for_label }}" class="col-sm-4 control-label text-success">No Of Rooms</label>
+                    <div class="col-sm-8">
+                        {{ form.no_of_rooms }}
+                        {{ form.no_of_rooms.errors }}
+                    </div>
+                </div>
+
+                                             <div class="form-group">
+                    <label class="col-sm-4 control-label text-success">Details</label>
+                    <div class="col-sm-8" style="color: #1D1D1D; font-weight: bold; padding-top: 7px" id="booking_price" >
+                        <b> Rooms: 1  </b> <br /><b> Total Days: 1  </b> <br /> <b> Total Price:  Rs. {{ place.booking_price }} </b>
+                    </div>
+                      {{ form.no_of_days_hidden }}
+                      {{ form.no_of_days_hidden.errors }}
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-primary">Check In</button>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="clearfix"></div>
+        </div>
+        <!-- REPEAT RESULT -->
+    </div>
+</div>
+
+{% include "includes/footer.html" %}
+
+<script>
+$(function() {
+$('input[name="date"]').daterangepicker({
+opens: 'left'
+}, function(start, end, label) {
+var days_count =  moment(end).diff(start, 'days');
+if(days_count==0) {
+days_count = 1;
+}
+var no_of_rooms = document.getElementById('id_no_of_rooms').value;
+var total_price = (no_of_rooms * days_count * {{ place.booking_price }});
+document.getElementById('booking_price').innerHTML = '<b> Rooms: '+no_of_rooms+'  </b> <br /><b> Total Days: '+days_count+'  </b> <br /> <b> Total Price:  Rs. '+total_price+' </b>';
+document.getElementById('id_no_of_days_hidden').value = days_count;
+});
+
+$( "#id_no_of_rooms" ).change(function() {
+var no_of_rooms = $(this).val();
+var date = $( '#id_date' ).val();
+var date_array = date.split("-");
+var start_date = $.trim(date_array[0]);
+var end_date = $.trim(date_array[1]);
+var start_date = moment(start_date, "MM/DD/YYYY");
+var end_date = moment(end_date, "MM/DD/YYYY");
+var days_count = end_date.diff(start_date, 'days');
+if(days_count==0) {
+days_count = 1;
+}
+var total_price = (no_of_rooms * days_count * {{ place.booking_price }});
+document.getElementById('booking_price').innerHTML = '<b> Rooms: '+no_of_rooms+'  </b> <br /><b> Total Days: '+days_count+'  </b> <br /> <b> Total Price:  Rs. '+total_price+' </b>';
+document.getElementById('id_no_of_days_hidden').value = days_count;
+});
+});
+</script>

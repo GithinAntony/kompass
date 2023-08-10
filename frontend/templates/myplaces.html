@@ -1,0 +1,61 @@
+ {% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+  <div id="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb">
+        <li><a href="index.php">Home</a></li>
+        <li>My Places</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="aboutus">
+    <div class="container">
+      <h3>My Places</h3>
+      <hr>
+        <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                        {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+      <!-- REPEAT RESULT -->
+{% for i in places %}
+      	<div class="col-sm-12">
+        	<div class="col-sm-2">
+            <img width="150px" src="{{ i.mainphoto }}">
+            </div>
+            <div class="col-sm-5">
+            	<h5 class="place-name">{{ i.name }} <span></span></h5>
+                <p>{{ i.description }}</p>
+            </div>
+			<div class="col-sm-1">
+               		<a class="btn btn-danger btn-sm" href="/places/delete/{{ i.id }}"> Delete</a>
+            </div>
+                <div class="col-sm-1">
+                <a class="btn btn-warning btn-sm" href="/user-gallery/{{ i.id }}"> Add Photos</a>
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-info btn-sm" href="/place-booking-orders/{{ i.id }}"> Bookings</a>
+            </div>
+            <div class="col-sm-1">
+              <a class="btn btn-success btn-sm" href="/place-details/{{ i.id }}"> Details</a>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+        </div>
+     {% endfor %}
+
+    </div>
+  </div>
+
+ {% include "includes/footer.html" %}

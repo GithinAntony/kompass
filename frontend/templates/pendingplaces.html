@@ -1,0 +1,60 @@
+ {% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<style>
+	table th{color:#1D1D1D}
+	table td{color:#3E3E3E}
+</style>
+  <div id="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb">
+        <li><a href="index.php">Home</a></li>
+        <li>Pending Places</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="aboutus">
+    <div class="container">
+      <h3>Pending Places</h3>
+      <hr>
+            {% if places %}
+      	<div class="col-sm-12">
+        	<table class="table table-bordered table-hover">
+            	<tr>
+                	<th>Sl#</th>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Overview</th>
+                    <th>Type</th>
+                    <th>Place</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>View</th>
+                </tr>
+                {% for i in places %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                	<td>{{ i.name }}</td>
+                    <td><img width="150px" src="{{ i.mainphoto }}"></td>
+                    <td>{{ i.overview }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.place }}</td>
+                    <td>{{ i.latitude }}</td>
+                    <td>{{ i.longitude }}</td>
+                    <td><a href="/place-details/{{ i.id }}" class="btn btn-info btn-xs" value="Disable"><i class="fa fa-eye"></i> View</a></td>
+                </tr>
+{% endfor %}
+            </table>
+        </div>
+{% else %}
+      	<div class="col-sm-12">
+            <p>No Pending Places Added</p>
+        </div>
+{% endif %}
+    </div>
+  </div>
+ {% include "includes/footer.html" %}

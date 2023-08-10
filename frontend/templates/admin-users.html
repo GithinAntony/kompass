@@ -1,0 +1,94 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<style>
+	table th{color:#1D1D1D}
+	table td{color:#3E3E3E}
+
+
+</style>
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li>Registered Users</li>
+        </div>
+    </div>
+</div>
+
+<div class="aboutus">
+    <div class="container-fluid">
+        <h3>Registered Users</h3>
+        <hr>
+        <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                        {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% if user_details %}
+        <div class="col-sm-12">
+            <table class="table table-datatable">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Phonenumber</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in user_details %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.usertype }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.email }}</td>
+                    <td>{{ i.username }}</td>
+                    <td>{{ i.phone }}</td>
+                    <td width="200">{{ i.address }}</td>
+                    <td>
+                        {% if i.status == 'active' %}
+                        <span class="badge badge-pill badge-success">Active</span>
+                        {% else %}
+                        <span class="badge badge-pill badge-warning">Suspend</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if i.status == 'active' %}
+                        <a href="/admin-users/status/{{ i.id }}/suspend"
+                           class="btn btn-warning btn-sm">Susupend User</a>
+                        {% else %}
+                        <a href="/admin-users/status/{{ i.id }}/active"
+                           class="btn btn-success btn-sm">Activate User</a>
+                        {% endif %}
+                        <a href="admin-users/delete/{{ i.id }}"
+                           class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        {% else %}
+        <div class="col-sm-12">
+            <p>No users Added</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% include "includes/footer.html" %}

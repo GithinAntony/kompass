@@ -1,0 +1,59 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li>Search Places</li>
+        </div>
+    </div>
+</div>
+
+<div class="aboutus">
+    <div class="container">
+        <!-- REPEAT RESULT -->
+{% if place != 'none' %}
+<div class="row">
+          <div class="col-sm-8">
+              <h3> Search {{ str_type|lower }} in {{ locality.name|lower }}</h3>
+          </div>
+            <div class="col-sm-4" >
+           <a class="btn btn-primary btn-sm pull-right" href="/search-category/{{ locality.id }}" style="margin-top: 20px; font-weight: bold;" >< GO BACK</a>
+            </div>
+</div>
+        <hr>
+
+<div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-2">
+                <img src="{{ place.mainphoto }}" width="100%">
+            </div>
+            <div class="col-sm-8">
+                <h5 class="place-name">{{ place.name }} | <span>{{ place.overview }}</span></h5>
+                <p>{{ place.description }}</p>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-primary btn-lg" href="/place-details/{{ place.id }}">Details</a>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+        </div>
+</div>
+   {% else %}
+<div class="row">
+<div class="col-lg-5"> <h4>No establishments found</h4></div>
+             <div class="col-lg-5" >
+           <a class="btn btn-primary btn-sm pull-right" href="/search-category/{{ locality.id }}" style="margin-top: 20px; font-weight: bold;" >< GO BACK</a>
+            </div>
+</div>
+ {% endif %}
+
+      </div>
+    </div>
+
+
+{% include "includes/footer.html" %}

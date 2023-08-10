@@ -1,0 +1,81 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+<br /><br /><br /><br />
+  <div class="about">
+    <div class="container">
+      <div class="col-lg-12">
+        <h2 style="color: Green">Hi, {{ request.session.username }} </h2>
+      </div>
+      <div class="col-md-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+        <h2>About Kompass</h2>
+        <img src="{% static 'images/6.jpg' %}" class="img-responsive" />
+      </div>
+
+      <div class="col-md-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+        <h2>&nbsp;</h2>
+        <p style="font-size:15px">If we get to a new tourist place, the google map may be used to get the
+information about it. But some of it is hard to understand and some have less
+information. So we are introducing a new generation application named
+‘Kompass’. Kompass makes exploring the world easier by organizing the
+essential information about a tourist spot in one place.
+
+          <p style="font-size:15px">The existing System will not provide each and every minute details about a
+single place.
+’Kompass’ will provide photos, details, facilities, fee structure, ratings,
+reviews about a place and also will get suggestions based on what’s nearby.
+          </p>
+      </div>
+    </div>
+  </div>
+
+<!--  <div class="lates">
+    <div class="container">
+      <div class="text-center">
+        <h2>Popular Destinations</h2>
+      </div>
+      <div class="col-md-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+        <img src="images/4.jpg" class="img-responsive" />
+        <h3>Template built with Twitter Bootstrap</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+      </div>
+
+      <div class="col-md-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+        <img src="images/4.jpg" class="img-responsive" />
+        <h3>Template built with Twitter Bootstrap</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+
+      <div class="col-md-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+        <img src="images/4.jpg" class="img-responsive" />
+        <h3>Template built with Twitter Bootstrap</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+      </div>
+    </div>
+  </div>
+-->
+  <section id="partner">
+    <div class="container">
+      <div class="center wow fadeInDown">
+        <h2>Our Partners</h2>
+      </div>
+
+      <div class="partners">
+        <ul>
+          <li> <a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms" src="{% static 'images/partners/partner1.png' %}"></a></li>
+          <li> <a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms" src="{% static 'images/partners/partner2.png' %}"></a></li>
+          <li> <a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms" src="{% static 'images/partners/partner3.png' %}"></a></li>
+          <li> <a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="1200ms" src="{% static 'images/partners/partner4.png' %}"></a></li>
+          <li> <a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="1500ms" src="{% static 'images/partners/partner5.png' %}"></a></li>
+        </ul>
+      </div>
+    </div>
+    <!--/.container-->
+  </section>
+  <!--/#partner-->
+
+{% include "includes/footer.html" %}

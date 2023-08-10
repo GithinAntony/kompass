@@ -1,0 +1,58 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<style>
+.category-link {
+color: black;
+}
+.category-link:hover {
+color: #1BBD36;
+}
+</style>
+
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li>Search Places</li>
+        </div>
+    </div>
+</div>
+
+<div class="aboutus">
+    <div class="container">
+        {% if place %}
+<div class="row">
+          <div class="col-sm-8">
+              <h3>Select category under {{ locality.name|lower }}</h3>
+          </div>
+            <div class="col-sm-4" >
+           <a class="btn btn-primary btn-sm pull-right" href="/home" style="margin-top: 20px; font-weight: bold;" >< GO BACK</a>
+            </div>
+</div>
+        <hr>
+         <div class="row">
+         {% for i in category %}
+          <div class="col-lg-3 col-md-4">
+            <div class="icon-box">
+              <h3><a href="/search-places/{{ place_id }}/{{ i }}" class="category-link" >{{ i  }}</a></h3>
+            </div>
+          </div>
+             {% endfor %}
+             </div>
+          {% else %}
+<div class="row">
+ <div class="col-lg-5"> <h4>No establishments found</h4></div>
+    <div class="col-lg-5" >
+           <a class="btn btn-primary btn-sm pull-right" href="/home" style="margin-top: 20px; font-weight: bold;" >< GO BACK</a>
+            </div>
+</div>
+              {% endif %}
+        <!-- REPEAT RESULT -->
+    </div>
+</div>
+
+{% include "includes/footer.html" %}

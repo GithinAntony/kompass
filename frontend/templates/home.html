@@ -1,0 +1,129 @@
+{% load static %}
+{% include "includes/header.html" %}
+<section id="main-slider" class="no-margin">
+    <div class="carousel slide">
+        <div class="carousel-inner">
+            <div class="item active" style="background-image: url({% static 'images/slider/bg1.jpg' %})">
+                <div class="container">
+                    <div class="row slide-margin">
+                        <div class="col-sm-12">
+                            <div class="carousel-content text-center">
+                                <h2 class="animation animated-item-1" style="font-size:38px">SEARCH PLACES<span></span>
+                                </h2><br>
+                                <form action="" method="POST" class="col-sm-6 col-sm-offset-3">
+                                    {% csrf_token %}
+                                    <div class="col-sm-8">
+                                        <select id="search_places" name="search_places" class="form-control input-lg"
+                                                style="border-radius: 0px; height: 50px">
+                                            {% for i in localitys %}
+                                            <option value="{{ i.id }}">{{ i.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="submit"
+                                               style="opacity:.9; padding: 15px 20px;border-radius: 0px;margin-top: 0px;"
+                                               class="btn btn-block btn-primary btn-lg" value="SEARCH">
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--/.item-->
+        </div>
+        <!--/.carousel-inner-->
+    </div>
+    <!--/.carousel-->
+</section>
+<!--/#main-slider-->
+
+<div class="about">
+    <div class="container">
+                <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="col-md-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+            <h2>About Kompass </h2>
+            <img src="{% static 'images/6.jpg' %}" class="img-responsive"/>
+        </div>
+
+        <div class="col-md-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+            <h2>&nbsp;</h2>
+            <p style="font-size:15px">If we get to a new tourist place, the google map may be used to get the
+                information about it. But some of it is hard to understand and some have less
+                information. So we are introducing a new generation application named
+                ‘Kompass’. Kompass makes exploring the world easier by organizing the
+                essential information about a tourist spot in one place.
+
+            <p style="font-size:15px">The existing System will not provide each and every minute details about a
+                single place.
+                ’Kompass’ will provide photos, details, facilities, fee structure, ratings,
+                reviews about a place and also will get suggestions based on what’s nearby.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!--  <div class="lates">
+    <div class="container">
+      <div class="text-center">
+        <h2>Popular Destinations</h2>
+      </div>
+      <div class="col-md-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+        <img src="images/4.jpg" class="img-responsive" />
+        <h3>Template built with Twitter Bootstrap</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+      </div>
+
+      <div class="col-md-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+        <img src="images/4.jpg" class="img-responsive" />
+        <h3>Template built with Twitter Bootstrap</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+
+      <div class="col-md-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="900ms">
+        <img src="images/4.jpg" class="img-responsive" />
+        <h3>Template built with Twitter Bootstrap</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+      </div>
+    </div>
+  </div>
+-->
+<section id="partner">
+    <div class="container">
+        <div class="center wow fadeInDown">
+            <h2>Our Partners</h2>
+        </div>
+
+        <div class="partners">
+            <ul>
+                <li><a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms"
+                                     data-wow-delay="300ms" src="{% static 'images/partners/partner1.png' %}"></a></li>
+                <li><a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms"
+                                     data-wow-delay="600ms" src="{% static 'images/partners/partner2.png' %}"></a></li>
+                <li><a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms"
+                                     data-wow-delay="900ms" src="{% static 'images/partners/partner3.png' %}"></a></li>
+                <li><a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms"
+                                     data-wow-delay="1200ms" src="{% static 'images/partners/partner4.png' %}"></a></li>
+                <li><a href="#"><img class="img-responsive wow fadeInDown" data-wow-duration="1000ms"
+                                     data-wow-delay="1500ms" src="{% static 'images/partners/partner5.png' %}"></a></li>
+            </ul>
+        </div>
+    </div>
+    <!--/.container-->
+</section>
+<!--/#partner-->
+{% include "includes/footer.html" %}

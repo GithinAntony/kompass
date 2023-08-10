@@ -1,0 +1,231 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+{% if place %}
+{% for i in place %}
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li>{{ i.name }}</li>
+        </div>
+    </div>
+</div>
+
+<div class="aboutus">
+    <div class="container">
+
+        <div class="row">
+          <div class="col-sm-8">
+              <h3>Place Details</h3>
+          </div>
+            <div class="col-sm-4" >
+           <a class="btn btn-primary btn-sm pull-right" href="/search-places/{{ i.place_id }}/{{ i.type }}" style="margin-top: 20px; font-weight: bold;" >< GO BACK</a>
+            </div>
+        </div>
+        <hr>
+        <section id="blog" class="container">
+            <div class="blog">
+                <div class="row">
+                            <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+                    <div class="col-md-8">
+                        <div class="blog-item">
+                            <div class="row">
+
+                                <div class="col-sm-3">
+                                    <div class="entry-meta">
+                                        <span id="publish_date">SUMMARY</span>
+                                        <span><i class="fa fa-info"></i><a
+                                                href="#">&nbsp;&nbsp;&nbsp;&nbsp;{{ i.type }}</a></span>
+                                        <span><i class="fa fa-map-marker"></i><a
+                                                href="#">&nbsp;&nbsp;&nbsp;&nbsp;{{ i.place }}</a></span>
+                                    </div><br />
+                                    {% if 'is_logged_in' in request.session and request.session.usertype == 'user' %}
+                                    <a href="/user-place-report/{{i.id}}" class="btn btn-danger btn-block">REPORT</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-9 blog-content">
+                                    <img class="img-responsive img-blog" src="{{ i.mainphoto }}" width="100%" alt=""/>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h4>{{ i.name }}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>{{i.description}}</p><br>
+                                            <table class="table table-hover table-bordered" style="color:#353535">
+                                                <tr>
+                                                    <th>Best time to visit</th>
+                                                    <td>{{i.besttime}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Native Language</th>
+                                                    <td>{{i.nativelang}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>How to reach</th>
+                                                    <td>{{i.howtoreach}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12 widget tags">
+                                            <h3>Amenities</h3>
+                                            <ul class="tag-cloud">
+                                                <li><a class="btn btn-xs btn-primary" href="#"> {{ i.amenities }} </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% if 'is_logged_in' in request.session and request.session.usertype == 'user' %}
+                                      <div class="row">
+                                        <div class="col-sm-12">
+                                            {%  if i.bookingtype == "day" %}
+                                            <a href="/user-place-booking-day/{{ i.id }}" class="btn btn-primary btn-block">Book</a>
+                                            {% elif i.bookingtype == "ticket" %}
+                                            <a href="/user-place-booking-ticket/{{ i.id }}" class="btn btn-primary btn-block">Buy tickets</a>
+                                            {% elif i.bookingtype == "seat" %}
+                                            <a href="/user-place-booking-seat/{{ i.id }}" class="btn btn-primary btn-block">Reserve Table</a>
+                                            {% else %}
+                                            {% endif %}
+                                        </div>
+
+                            <div class="col-sm-12">
+                            <h4>RATE AND REVIEW</h4>
+                            <form  method="post" style="background:#ECECEC; padding:10px;">
+                                {% csrf_token %}
+                                                <div class="form-group">
+                    <div class="col-sm-12 align-center" style="color:red">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+                                <label for="{{ form.rating.id_for_label }}" class="text-success">Rate this place</label>
+                         {{ form.rating }}
+                        {{ form.rating.errors }}
+                                <br />
+                                <label for="{{ form.review.id_for_label }}" class="text-success">Write a review</label>
+                        {{ form.review }}
+                        {{ form.review.errors }}
+                                <br />
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                            </form>
+                            </div>
+
+                                        </div>
+                                    {% else %}
+                                        <div class="row">
+                                        <div class="col-sm-12">
+                                            {%  if i.bookingtype == "day" %}
+                                            <a href="/login" class="btn btn-primary btn-block">Login to Book</a>
+                                            {% elif i.bookingtype == "ticket" %}
+                                            <a href="/login" class="btn btn-primary btn-block">Login to Buy tickets</a>
+                                            {% elif i.bookingtype == "seat" %}
+                                            <a href="/login" class="btn btn-primary btn-block">Login to Reserve Table</a>
+                                            {% else %}
+                                            {% endif %}
+                                        </div>
+                                        </div>
+                                    {% endif %}
+                                    <!--/.col-md-8-->
+                                </div>
+                                <!--/.row-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-xs-12" id="map-canvas" style="height: 300px;">
+                        </div>
+                        <div class="col-xs-12 widget blog_gallery">
+                            <br/>
+                            <h3>Gallery</h3>
+                            {% if user_gallery %}
+                            <ul class="sidebar-gallery">
+                                {% for i in user_gallery %}
+                                <li>
+                                    <a href="{{ i.image }}" rel="prettyPhoto">
+                                        <img width="100" src="{{ i.image }}"
+                                             alt=""/>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <b style="color: black"> No images added. </b>
+                            {% endif %}
+                        </div>
+
+<div class="col-xs-12 widget blog_gallery">
+<br/>
+<h3>Reviews</h3>
+{% if review != 'none' %}
+{% for i in review %}
+<div class="col-sm-12" style="padding-bottom:5px; border-bottom: #1BBD36 thin solid">
+
+
+<span class="fa fa-star" style="color: #FFA500" > {{ i.rating }}/5 </span>
+
+<br />
+<span style="padding: 5px; font-weight: bold;  color: black" >{{  i.review }}</span>
+</div>
+{% endfor %}
+{% else %}
+<b style="color: black"> No review added. </b>
+{% endif %}
+</div>
+</div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+
+<script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+          center: {lat: {{ i.latitude }}, lng: {{ i.longitude }}},
+          zoom: 8,
+          scrollwheel: false,
+		mapTypeControl: false,
+		scaleControl: false,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+          var contentString = '<div id="content">'+
+      '<h6><center>{{i.name}}</center></h6>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+  });
+
+  var marker = new google.maps.Marker({
+        position: new google.maps.LatLng({{ i.latitude }},{{ i.longitude }}),
+        map: map,
+		title: '{{i.name}}'
+  });
+    infowindow.open(map,marker)
+
+      }
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG34k-2lnM4H46SnSQsyQn_cvdRH00l3U&callback=initMap"
+        async defer></script>
+{% endfor %}
+{% endif %}
+{% include "includes/footer.html" %}

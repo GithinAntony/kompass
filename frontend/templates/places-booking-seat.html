@@ -1,0 +1,79 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+  <div id="breadcrumb">
+    <div class="container">
+      <div class="breadcrumb">
+        <li><a href="index.php">Home</a></li>
+        <li>Book your Seat</li>
+      </div>
+    </div>
+  </div>
+
+<div class="aboutus">
+    <div class="container">
+        <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+
+
+        <!-- REPEAT RESULT -->
+        <div class="col-sm-6 col-sm-offset-3 well input-form">
+            <h3>Book Your Seat</h3>
+                        <form action="" class="form-horizontal" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-sm-12 align-center" style="color:red">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+                            <div class="form-group">
+                    <label class="col-sm-4 control-label text-success">Booking Item</label>
+                    <div class="col-sm-8" style="color: #1D1D1D; font-weight: bold; padding-top: 7px">
+                        {{ place.name }}
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-4 control-label text-success">Booking Price per item</label>
+                    <div class="col-sm-8" style="color: #1D1D1D; font-weight: bold; padding-top: 7px">
+                        Rs. {{ place.booking_price }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.no_of_seat.id_for_label }}" class="col-sm-4 control-label text-success">No of tickets</label>
+                    <div class="col-sm-8">
+                        {{ form.no_of_seat }}
+                        {{ form.no_of_seat.errors }}
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="" class="col-sm-4 control-label text-success">Amount to pay</label>
+                    <div class="col-sm-8" style="color: #1D1D1D; font-weight: bold; padding-top: 7px" id="booking_price" >
+                       Rs. {{ place.booking_price }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-primary">Book</button>
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </div>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+        <!-- REPEAT RESULT -->
+    </div>
+</div>
+
+{% include "includes/footer.html" %}

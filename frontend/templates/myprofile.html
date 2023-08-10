@@ -1,0 +1,105 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li>My Profile</li>
+        </div>
+    </div>
+</div>
+
+<div class="aboutus">
+    <div class="container">
+        <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                        {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <!-- REPEAT RESULT -->
+        <div class="col-sm-6 col-sm-offset-3 well">
+            <h3>My Profile</h3>
+            <form action="" class="form-horizontal" method="post" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-sm-12 align-center">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.main_photo.id_for_label }}" class="col-sm-2 control-label text-success">Username</label>
+                    <div class="col-sm-10">
+                                          {{ form.username }}
+                        {{ form.username.errors }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label text-success">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" name="name" value="" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label text-success">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="email" id="email" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="col-sm-2 control-label text-success">Phone Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="phone" name="phone" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label text-success">Address</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="address" name="address" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="place" class="col-sm-2 control-label text-success">Place</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="place" class="form-control" list="placeslist" value=""
+                               placeholder="Type your place here..">
+                        <datalist id="placeslist">
+                            {% for i in localitys %}
+                            <option value="{{ i.name }}">
+                                {% endfor %}
+                        </datalist>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="place" class="col-sm-2 control-label text-success">Change Password</label>
+                    <div class="col-sm-10">
+                        <a href="changepassword.php" class="btn btn-link">Change Password</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="clearfix"></div>
+        </div>
+        <!-- REPEAT RESULT -->
+
+
+    </div>
+</div>
+
+{% include "includes/footer.html" %}

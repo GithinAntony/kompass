@@ -1,0 +1,105 @@
+{% load static %}
+{% include "includes/header.html" %}
+{% if 'logged_in' in request.session %}
+**** redirect here
+{% endif %}
+
+<style>
+	table th{color:#1D1D1D}
+	table td{color:#3E3E3E}
+
+
+
+
+</style>
+<div id="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li>Registered Users</li>
+        </div>
+    </div>
+</div>
+
+<div class="aboutus">
+    <div class="container-fluid">
+        <h3>Added Places</h3>
+        <hr>
+        <div class="col-xs-12 align-center">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li
+                        {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% if places %}
+        <div class="col-sm-12">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>Sl#</th>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Overview</th>
+                    <th>Type</th>
+                    <th>Place</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Booking Type</th>
+                    <th>Booking Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for i in places %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><img width="150px" src="{{ i.mainphoto }}"></td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.overview }}</td>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.place }}</td>
+                    <td>{{ i.latitude }}</td>
+                    <td>{{ i.longitude }}</td>
+                    <td>{{ i.bookingtype }}</td>
+                    <td>Rs. {{ i.booking_price }}</td>
+                    <td>
+                        {% if i.status == 'pending' %}
+                        <span class="badge badge-pill badge-warning">Pending</span>
+                        {% else %}
+                        <span class="badge badge-pill badge-success">Active</span>
+                        {% endif %}
+                    </td>
+                    <td width="200">
+                        {% if i.status == 'pending' %}
+                        <a href="admin-places/status/{{i.id}}/active" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> Approved</a>
+                        {% else %}
+                        <a href="admin-places/status/{{i.id}}/pending" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Pending</a>
+                        {% endif %}
+                        <a href="admin-places/delete/{{i.id}}" class="btn btn-danger btn-sm"><i class="fa fa-eye"></i> Delete</a>
+                        <!--
+                          <form method="post" >
+                              <input type="hidden" name="blockid" value="<?php echo $incomingrow['id']; ?>">
+                              <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Disable</button>
+                          </form>
+                          <form method="post">
+                              <input type="hidden" name="unblockid" value="<?php echo $incomingrow['id']; ?>">
+                              <button type="submit" class="btn btn-info btn-xs"><i class="fa fa-check"></i> Enable</button>
+                          </form>
+                        -->
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="col-sm-12">
+            <p>No places Added</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% include "includes/footer.html" %}
